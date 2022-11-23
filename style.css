@@ -1,0 +1,311 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* css reset */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+theader,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+headerer,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+headerer,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+@-ms-viewport {
+  width: device-width;
+}
+@-o-viewport {
+  width: device-width;
+}
+
+@font-face {
+  font-family: Pretendard;
+  src: url(./font/PretendardVariable.woff2);
+}
+
+html * {
+  font-family: Pretendard;
+}
+
+.content {
+  height: 100vh;
+  background: #282828;
+  margin: 0 auto;
+  position: relative;
+}
+
+.header {
+  position: sticky;
+  height: 70px;
+  box-shadow: 0px 1px 2px #e6e6e6;
+  background: #f4f4f4;
+}
+
+.header .menu {
+  width: 70px;
+  height: 100%;
+  position: relative;
+}
+
+.header .menu .res-menu {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 15px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.header .menu .res-menu span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2.5px;
+  background: #282828;
+  border-radius: 2px;
+  transition: transform 0.3s;
+}
+
+.header .menu span:nth-child(1) {
+  top: 0;
+  left: 0;
+}
+
+.header .menu span:nth-child(2) {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.header .menu span:nth-child(3) {
+  bottom: 0;
+  left: 0;
+}
+
+#sideopen {
+  display: none;
+}
+
+.header input[type="checkbox"]:checked + label > .res-menu span:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotate(-45deg);
+}
+.header input[type="checkbox"]:checked + label > .res-menu span:nth-child(2) {
+  display: none;
+}
+.header input[type="checkbox"]:checked + label > .res-menu span:nth-child(3) {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.sidebar {
+  position: fixed;
+  width: 250px;
+  height: calc(100vh - 105px);
+  top: 70px;
+  left: -253px;
+  background: #f4f4f4;
+  box-shadow: 1px 0px 2px #e6e6e6;
+  transition: left 0.5s;
+  z-index: 999;
+}
+.header input[type="checkbox"]:checked + label + .sidebar {
+  left: 0;
+}
+
+/* 아코디언 메뉴 */
+.category {
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid #fff;
+}
+.category:last-child {
+  border-bottom: 1px solid #fff;
+}
+.category .menu {
+  display: block;
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background: #565656;
+}
+
+.category .menu .menulink {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  width: 70%;
+  padding-left: 15px;
+  line-height: 50px;
+  font-size: 15px;
+}
+.category .menu .subopen {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 15px;
+  padding: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.category .menu .subopen span {
+  position: absolute;
+  display: block;
+  width: 8px;
+  height: 8px;
+  top: calc(50% - 4px);
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  transition: 0.3s;
+}
+.category .menu .subopen.active span {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-135deg);
+}
+
+.category ul li {
+  height: 40px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+/* footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 35px;
+  background-color: #f4f4f4;
+  box-shadow: 1px 0px 2px #e6e6e6;
+  display: flex;
+  align-items: center;
+}
+
+.footer span:first-child {
+  font-size: 12px;
+  margin-left: 40px;
+}
