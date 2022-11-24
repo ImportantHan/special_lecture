@@ -14,64 +14,62 @@
 
   </head>
   <body>
-    <div class="content">
-      <div class="header">
-        <div class="menu">
-          <input type="checkbox" id="sideopen" />
-          <label for="sideopen">
-            <div class="res-menu">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </label>
-          <div class="sidebar">
-            <div class="category">
-              <span class="menu">
-                <a href="#" class="menulink home">메인</a>
-              </span>
-            </div>
-            <div class="category">
-              <span class="menu">
-                <a href="#" class="menulink">내 강의실</a>
-                <a href="javascript:void(0);" class="subopen">
-                  <span></span>
-                </a>
-              </span>
-              <ul>
-                <li>진행중인 수업</li>
-                <li>완료된 수업</li>
-              </ul>
-            </div>
-            <div class="category">
-              <span class="menu">
-                <a href="#" class="menulink">과제 관리</a>
-                <a href="javascript:void(0);" class="subopen"
-                  ><span></span
-                ></a>
-              </span>
-              <ul>
-                <li>과제 제출</li>
-                <li>피드백 확인</li>
-                <li>완료된 과제</li>
-              </ul>
-            </div>
-            <div class="category">
-              <span class="menu">
-                <a href="#" class="menulink">My Page</a>
-            </div>
+    <div class="header">
+      <div class="menu">
+        <input type="checkbox" id="sideopen"/>
+        <label for="sideopen">
+          <div class="res-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </label>
+        <div class="sidebar">
+          <div class="category">
+            <span class="menu">
+              <a href="#" class="menulink home">메인</a>
+            </span>
+          </div>
+          <div class="category">
+            <span class="menu">
+              <a href="#" class="menulink">내 강의실</a>
+              <a href="javascript:void(0);" class="subopen">
+                <span></span>
+              </a>
+            </span>
+            <ul>
+              <li>진행중인 수업</li>
+              <li>완료된 수업</li>
+            </ul>
+          </div>
+          <div class="category">
+            <span class="menu">
+              <a href="#" class="menulink">과제 관리</a>
+              <a href="javascript:void(0);" class="subopen"
+                ><span></span
+              ></a>
+            </span>
+            <ul>
+              <li>과제 제출</li>
+              <li>피드백 확인</li>
+              <li>완료된 과제</li>
+            </ul>
+          </div>
+          <div class="category">
+            <span class="menu">
+              <a href="#" class="menulink">My Page</a>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="body">
-        <canvas id="canvas-test" height="500px" width="500px"></canvas>
-      </div>
+    <div class="body">
+      <canvas id="canvas"></canvas>
+    </div>
 
-      <div class="footer">
-        <span>&copy; PURPLE ACADEMY</span>
-        <span class="material-symbols-outlined">home</span>
-      </div>
+    <div class="footer">
+      <span>&copy; PURPLE ACADEMY</span>
+      <span class="material-symbols-outlined">home</span>
     </div>
 
     <script src="./main.js"></script>

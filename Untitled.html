@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" 
+          content="width=device-width, height=device-height, 
+                     minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0">
+    <title>Insert title here</title>
+    <script type="text/javascript">
+    window.onload = function(){
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        if(canvas.getContext){
+            var img = new Image();
+            img.src = "/img/favicon.png";
+            img.onload = function(){
+                //이미지의 원하는 부분만 잘라서 그리기
+                //drawImage(이미지객체, 
+                //        이미지의 왼위 부분x, 이미지의 왼위 부분y, 이미지의 원하는 가로크기, 이미지의 원하는 세로크기,
+                //        사각형 부분x, 사각형 부분y, 가로크기, 세로크기)
+                //draw.drawImage(img, 100,100, 300,300, 50,50, 250,300);
+                
+                //전체 이미지 그리기
+                //drawImage(이미지객체, 사각형 왼위 x, 사각형 왼위 y, 가로크기, 세로크기)
+                ctx.drawImage(img, 50,50, 250,300);
+            }
+        }
+        canvas.addEventListener("mousemove", function(e){ mouseMove(e) });
+        canvas.addEventListener("mousedown", function(e){ mouseDown(e) });
+        canvas.addEventListener("mouseup", function(e){ mouseUp(e) });
+        canvas.addEventListener("mouseout", function(e){ mouseOut(e) });
+        canvas.addEventListener("touchmove", touchMove, false);
+        canvas.addEventListener("touchstart", touchStart, false);
+        canvas.addEventListener("touchend", touchEnd, false);
+
+        let startX = 0;
+        let startY = 0;
+        let drawing = false;
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "blue";
+
+        function draw(curX, curY) {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(curX, curY);
+            ctx.stroke();
+        }
+
+        function mouseDown(e) {
+            startX = e.offsetX;
+            startY = e.offsetY;
+            drawing = true;
+        }
+        
+        function mouseMove(e) {
+                if(!drawing) return;
+                let curX = e.offsetX;
+                let curY = e.offsetY;
+                draw(curX, curY);
+                startX = curX;
+                startY = curY;
+        }
+        function mouseUp(e) {
+            drawing = false;
+        }
+        
+        function mouseOut(e) {
+            drawing = false;
+        }
+
+        function preventBehavior(e) {
+            e.preventDefault();
+        }
+       
+        function getTouchPos(e) {
+            return {
+                x: e.touches[0].clientX - e.target.offsetLeft,
+                y: e.touches[0].clientY - e.target.offsetTop + document.documentElement.scrollTop
+            }
+        }
+        function touchStart(e) {
+            e.preventDefault();
+            const { x, y } = getTouchPos(e);
+            console.log(x, y);
+            drawing = true;
+            startX = x;
+            startY = y;
+        }
+        function touchMove(e) {
+            if(!drawing) return;
+            const { x, y } = getTouchPos(e);
+            draw(x, y);
+            startX = x;
+            startY = y;
+        }
+        function touchEnd(e) {
+            if(!drawing) return;
+            // 점을 찍을 경우 위해 마지막에 점을 찍는다.
+            // touchEnd 이벤트의 경우 위치정보가 없어서 startX, startY를 가져와서 점을 찍는다.
+            ctx.beginPath();
+            ctx.arc(startX, startY, ctx.lineWidth/2, 0, 2*Math.PI);
+            ctx.fillStyle = ctx.strokeStyle;
+            ctx.fill();
+            drawing = false;
+        }
+
+   }   
+    </script>
+</head>
+ 
+<body>
+    <canvas id="canvas" width="300px" height="400px"></canvas>
+</body>
+</html>
