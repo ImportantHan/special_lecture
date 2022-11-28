@@ -17,9 +17,11 @@
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const selectBtn = document.getElementById("selectBtn");
 const lineWidth = document.getElementById("lineWidth");
 const strokeColor = document.getElementById("strokeColor");
 const brushBtn = document.getElementById("brushBtn");
+const highlighterBtn = document.getElementById("highlighterBtn");
 const eraseBtn = document.getElementById("eraseBtn");
 const cleanBtn = document.getElementById("cleanBtn");
 const fileInput = document.getElementById("fileInput");
@@ -38,19 +40,20 @@ canvas.addEventListener("mouseleave", mouseLeave);
 canvas.addEventListener("touchmove", touchMove, false);
 canvas.addEventListener("touchstart", touchStart, false);
 canvas.addEventListener("touchend", touchEnd, false);
+selectBtn.addEventListener("click", selectBtnClick);
 lineWidth.addEventListener("change", lineWidthChange);
 strokeColor.addEventListener("change", strokeColorChange);
 brushBtn.addEventListener("click", brushBtnClick);
+highlighterBtn.addEventListener("click", highlighterBtnClick);
 eraseBtn.addEventListener("click", eraseBtnClick);
 cleanBtn.addEventListener("click", cleanBtnClick);
 fileInput.addEventListener("change", fileChange);
 saveBtn.addEventListener("click", saveBtnClick);
 revertBtn.addEventListener("click", revertBtnClick);
 
-const canvasWidth = 600;
-const canvasHeight = 600;
-canvas.width = canvasWidth;
-canvas.height = canvasHeight;
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
 let isPainting = false;
 let mode = "brush";
 
@@ -62,20 +65,17 @@ ctx.linejoin = "round";
 let restore_array =[];
 let index = -1;
 index += 1;
-restore_array.push(ctx.getImageData(0, 0, canvasWidth, canvasHeight));
+restore_array.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
 
 console.log(body.style);
 function mouseMove(e){
   if (isPainting) {
-    if (mode === "brush") {
+    if (mode === "brush" || mode === "highlighter") {
       ctx.lineTo(e.offsetX, e.offsetY);
       ctx.stroke();
       return;
     } else if (mode === "erase") {
       ctx.clearRect(e.offsetX, e.offsetY, ctx.lineWidth, ctx.lineWidth);
-      // ctx.strokeStyle = canvas.style.background;
-      // ctx.lineTo(e.offsetX, e.offsetY);
-      // ctx.stroke();
     }
   }
   ctx.moveTo(e.offsetX, e.offsetY);
@@ -83,19 +83,17 @@ function mouseMove(e){
 
 function mouseDown(e) {
   isPainting = true;
-  if(mode === "brush") {
-    ctx.moveTo(e.offsetX, e.offsetY);
-  } else if (mode === "erase") {
-    ctx.moveTo(e.offsetX, e.offsetY);
-  }
+  ctx.moveTo(e.offsetX, e.offsetY);
 }
 
 function mouseUp(){
   isPainting = false;
   ctx.beginPath();
-  index += 1;
-  restore_array.push(ctx.getImageData(0, 0, canvasWidth, canvasHeight));
-  console.log(index);
+  if(mode === "brush" || mode === "erase" || mode === "highlighter") {
+    index += 1;
+    restore_array.push(ctx.getImageData(0, 0, canvas.width,  canvas.height));
+    console.log(index);
+  }
 }
 
 function mouseLeave() {
@@ -132,12 +130,21 @@ function touchEnd() {
   isPainting = false;
   ctx.beginPath();
   index += 1;
-  restore_array.push(ctx.getImageData(0, 0, canvasWidth, canvasHeight));
+  restore_array.push(ctx.getImageData(0, 0, canvas.width,  canvas.height));
   console.log(index);
 }
 
+function selectBtnClick(e) {
+  mode = "select";
+  isPainting = false;
+}
+
 function lineWidthChange(e) {
-  ctx.lineWidth = e.target.value;
+  if(mode === "brush" || mode === "erase") {
+    ctx.lineWidth = e.target.value;
+  } else if (mode === "highlighter") {
+    ctx.lineWidth = e.target.value * 10;
+  }
 }
 
 function strokeColorChange(e) {
@@ -146,16 +153,24 @@ function strokeColorChange(e) {
 
 function brushBtnClick(e) {
   mode = "brush";
-  console.log(mode);
+  ctx.globalAlpha = "1.0"; 
+  ctx.lineWidth = lineWidth.value;
+}
+
+function highlighterBtnClick(e) {
+  mode = "highlighter";
+  console.log(strokeColor.value + 80);
+  ctx.globalAlpha = "0.015";
+  ctx.lineWidth = 30;
 }
 
 function eraseBtnClick(){
   mode = "erase";
-  console.log(mode);
 }
 
 function cleanBtnClick(){
-  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  index = 0;
   ctx.beginPath();
 }
 
@@ -191,3 +206,5 @@ function revertBtnClick() {
   }
   console.log(index);
 }
+
+// =========================================================================
